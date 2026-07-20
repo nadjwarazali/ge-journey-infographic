@@ -73,14 +73,6 @@ box.addEventListener("ballot-dropped", (e) => {
 | [Zalando Sans Expanded](https://fonts.google.com) | — | Display typeface (Google Fonts) |
 | [Vercel](https://vercel.com) | — | Deployment |
 
-## Development
-
-```bash
-npx serve .   # static file server — SVG fetch requires HTTP, not file://
-```
-
-No build step. Open `index.html` over a local server.
-
 ## Architecture
 
 | File | Role |
