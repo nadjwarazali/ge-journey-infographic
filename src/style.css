@@ -1,0 +1,561 @@
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #0b1428;
+  height: 100svh;
+  overflow: hidden;
+  font-family: system-ui, sans-serif;
+  color: #e8eaf0;
+}
+
+a { color: #8da4c4; text-decoration: none; }
+a:hover { color: #fff; }
+
+
+/* ── Right panel ─────────────────────────────────────────────────────────── */
+.right-panel {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100svh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+/* ── Stage sections ──────────────────────────────────────────────────────── */
+.stage-section {
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+  background: #0b1428;
+}
+
+.stage-section img {
+  max-width: 100%;
+  max-height: 80svh;
+  object-fit: contain;
+  display: block;
+}
+
+.stage-visual {
+  width: 100%;
+  max-height: 80svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stage-visual svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#dissolution-visual svg,
+#results-visual svg {
+  width: 70%;
+  height: auto;
+}
+
+#dissolution-visual,
+#results-visual {
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.seat-legend {
+  display: flex;
+  gap: 1.5em;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.seat-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.8em;
+  color: #8da4c4;
+  font-family: system-ui, sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.seat-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+#nomination-visual svg {
+  width: auto;
+  height: 80svh;
+}
+
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+.stage-section--hero {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0b1428;
+}
+
+.hero-bars { display: none; }
+
+.hero-body {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2em;
+  max-width: 700px;
+}
+
+.hero-eyebrow {
+  margin: 0 0 0.75em;
+  font-size: 0.7em;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8da4c4;
+}
+
+.hero-title {
+  font-family: "Zalando Sans Expanded", sans-serif;
+  font-size: clamp(2em, 5vw, 5em);
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0 0 1.5em;
+}
+
+.hero-scroll-hint {
+  font-size: 0.8em;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0;
+  animation: hero-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes hero-pulse {
+  0%, 100% { opacity: 0.35; }
+  50%       { opacity: 0.75; }
+}
+
+/* ── Campaign ────────────────────────────────────────────────────────────── */
+.stage-section--campaign {
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+#campaign-visual {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.campaign-row {
+  flex: 0 0 calc((100svh - 160px) / 2);
+  display: flex;
+  overflow: hidden;
+}
+
+.campaign-flag {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0b1428;
+}
+
+.campaign-flag svg {
+  height: 65%;
+  width: auto;
+  display: block;
+}
+
+.vote-shouts-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.vote-shout {
+  position: absolute;
+  white-space: nowrap;
+  font-weight: 700;
+  pointer-events: none;
+  opacity: 0;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+}
+
+.campaign-street {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  overflow: visible;
+}
+
+.street-line {
+  width: 100%;
+  height: 4px;
+  background: repeating-linear-gradient(
+    to right,
+    #ffaf36 0px,
+    #ffaf36 40px,
+    transparent 40px,
+    transparent 80px
+  );
+  opacity: 0.7;
+}
+
+/* ── Polling ─────────────────────────────────────────────────────────────── */
+.stage-visual--polling {
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+.stage-visual--polling svg {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 38svh;
+}
+
+.ballot-row { cursor: pointer; }
+.ballot-row .row-x { opacity: 0; transition: opacity 0.15s ease; }
+.ballot-row:hover .row-x { opacity: 1; }
+
+.stage-section[data-stage="polling"] {
+  position: relative;
+  flex-direction: column;
+  gap: 1.25em;
+  padding-top: 8em;
+}
+
+.poll-hint {
+  position: absolute;
+  top: 2.75em;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em 1.1em;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 2em;
+  font-size: 0.78em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+/* ── Counting ────────────────────────────────────────────────────────────── */
+#counting-visual svg {
+  width: auto;
+  height: 80svh;
+  shape-rendering: geometricPrecision;
+}
+
+/* ── Stage panel (fixed overlay on the left half) ────────────────────────── */
+.stage-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100svh;
+  z-index: 100;
+  background: #0b1428;
+  border-right: 1px solid #1a2a4a;
+  display: flex;
+  flex-direction: column;
+  padding: 3em 3.5em;
+  overflow: hidden;
+}
+
+/* ── Stage panel top (page identity) ─────────────────────────────────────── */
+.stage-panel-top {
+  margin-bottom: 2em;
+}
+
+.page-eyebrow {
+  margin: 0 0 0.6em;
+  font-size: 0.7em;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8da4c4;
+}
+
+.page-title {
+  font-family: "Zalando Sans Expanded", sans-serif;
+  font-size: clamp(1.4em, 2vw, 2.25em);
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.1;
+}
+
+/* ── Stage text (updates on scroll) ─────────────────────────────────────── */
+.stage-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: opacity 0.25s ease;
+}
+
+.stage-num {
+  font-size: 0.75em;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #8da4c4;
+  margin: 0 0 0.5em;
+}
+
+.stage-title {
+  font-family: "Zalando Sans Expanded", sans-serif;
+  font-size: clamp(2em, 3.5vw, 4em);
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.25em;
+  line-height: 1;
+}
+
+.stage-desc {
+  font-size: 1em;
+  color: #8da4c4;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 38ch;
+}
+
+/* ── Journey map nav ─────────────────────────────────────────────────────── */
+.journey-map {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.journey-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.journey-step {
+  --step-c: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+}
+
+.journey-step--active {
+  --step-c: #f15613;
+}
+
+.journey-node {
+  position: relative;
+  width: 2.25em;
+  height: 2.25em;
+  border-radius: 50%;
+  border: 2px solid var(--step-c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85em;
+  color: var(--step-c);
+  background: rgba(255, 255, 255, 0.04);
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.journey-node[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(11, 20, 40, 0.95);
+  border: 1px solid #2a3a5e;
+  color: #e8eaf0;
+  padding: 0.3em 0.65em;
+  border-radius: 4px;
+  font-size: 0.7em;
+  font-weight: 400;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 200;
+}
+
+.journey-step:hover .journey-node[data-tip]::after {
+  opacity: 1;
+}
+
+.journey-label {
+  font-size: 0.6em;
+  color: #8da4c4;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.journey-arrow {
+  flex: 1;
+  height: 1px;
+  background: #2a3a5e;
+  align-self: center;
+  margin-bottom: 1.5em;
+  min-width: 0.25em;
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Stage panel: compact fixed header */
+  .stage-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40svh;
+    border-right: none;
+    border-bottom: 1px solid #1a2a4a;
+    padding: 1.25em 1.5em 1em;
+    overflow: hidden;
+    justify-content: space-between;
+  }
+
+  .stage-panel-top { margin-bottom: 0.5em; }
+  .page-eyebrow    { display: none; }
+  .page-title      { font-size: 0.6em; letter-spacing: 0.05em; line-height: 1.2; }
+
+  .stage-text {
+    flex: 1;
+    justify-content: flex-start;
+    margin: 0 0 0.75em;
+  }
+
+  .stage-num   { margin: 0 0 0.2em; }
+  .stage-title { font-size: clamp(1.5em, 6vw, 2.25em); margin: 0 0 0.2em; }
+  .stage-desc  { font-size: 0.85em; line-height: 1.5; max-width: none; }
+  .journey-label { display: none; }
+
+  .journey-map   { order: -1; margin-bottom: 1em; justify-content: center; }
+  .journey-arrow { display: flex; flex: 0 0 1em; min-width: 0; margin-bottom: 0; }
+  .journey-node  { width: 1.4em; height: 1.4em; font-size: 0.65em; }
+  .journey-label { font-size: 0.45em; }
+
+  /* Right panel: fills remaining screen below header */
+  .right-panel {
+    position: fixed;
+    top: 40svh;
+    left: 0;
+    width: 100%;
+    height: 60svh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+  }
+
+  /* Sections: fit exactly in the right panel viewport */
+  .stage-section {
+    height: 60svh;
+    scroll-snap-align: start;
+    padding: 1.5em 1em;
+  }
+
+
+  /* SVG size corrections */
+  #nomination-visual svg { height: 46svh; }
+  #counting-visual svg   { height: 46svh; }
+
+  #dissolution-visual svg,
+  #results-visual svg { width: 68%; }
+
+  .seat-legend      { gap: 0.75em; }
+  .seat-legend-item { font-size: 0.65em; gap: 0.35em; }
+  .seat-legend-dot  { width: 7px; height: 7px; }
+
+  /* Campaign: no padding so rows fill section exactly */
+  .stage-section--campaign { padding: 0; }
+  .campaign-row    { flex: 0 0 calc((60svh - 90px) / 2); }
+  .campaign-street { height: 90px; }
+
+  /* Polling: tighten layout */
+  .stage-section[data-stage="polling"] {
+    padding-top: 3.5em;
+    gap: 0.75em;
+  }
+
+  .stage-visual--polling svg { max-height: 22svh; }
+
+  ballot-box {
+    width: min(240px, 75vw) !important;
+    height: min(190px, 30svh) !important;
+  }
+
+  .poll-hint {
+    top: 0.75em;
+    font-size: 0.55em;
+    padding: 0.35em 0.75em;
+  }
+}
+
+/* ── Restart button ──────────────────────────────────────────────────────── */
+.restart-btn {
+  margin-top: 1.5em;
+  padding: 0.55em 1.25em;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 2em;
+  color: #8da4c4;
+  font-family: system-ui, sans-serif;
+  font-size: 0.8em;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.restart-btn:hover {
+  border-color: #f15613;
+  color: #f15613;
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

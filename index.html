@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How Malaysia's General Election Works</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:ital,wght@0,200..900;1,200..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <aside class="stage-panel">
+      <div class="stage-panel-top">
+        <p class="page-eyebrow">A visual guide to Malaysia's democratic process</p>
+        <h1 class="page-title">How Malaysia's General Election Works</h1>
+      </div>
+
+      <div class="stage-text">
+        <p class="stage-num">01</p>
+        <h2 class="stage-title">DISSOLUTION</h2>
+        <p class="stage-desc">
+          Every election starts by Parliament being dissolved, either by the
+          Prime Minister's call or automatically at the end of its term. From
+          there, the clock starts. A new election must follow within 60 days.
+        </p>
+      </div>
+
+      <nav class="journey-map" aria-label="Election stages">
+        <div class="journey-step" data-stage="dissolution">
+          <div class="journey-node" data-tip="Parliament dissolved">1</div>
+          <div class="journey-label">Dissolution</div>
+        </div>
+        <div class="journey-arrow" aria-hidden="true"></div>
+        <div class="journey-step" data-stage="nomination">
+          <div class="journey-node" data-tip="Candidates file papers">2</div>
+          <div class="journey-label">Nomination</div>
+        </div>
+        <div class="journey-arrow" aria-hidden="true"></div>
+        <div class="journey-step" data-stage="campaign">
+          <div class="journey-node" data-tip="Min. 11 days campaign">3</div>
+          <div class="journey-label">Campaign</div>
+        </div>
+        <div class="journey-arrow" aria-hidden="true"></div>
+        <div class="journey-step" data-stage="polling">
+          <div class="journey-node" data-tip="222 seats contested">4</div>
+          <div class="journey-label">Polling</div>
+        </div>
+        <div class="journey-arrow" aria-hidden="true"></div>
+        <div class="journey-step" data-stage="counting">
+          <div class="journey-node" data-tip="Verified by scrutineers">5</div>
+          <div class="journey-label">Counting</div>
+        </div>
+        <div class="journey-arrow" aria-hidden="true"></div>
+        <div class="journey-step" data-stage="results">
+          <div class="journey-node" data-tip="New parliament formed">6</div>
+          <div class="journey-label">Results</div>
+        </div>
+      </nav>
+    </aside>
+
+    <section class="stage-section--hero" aria-label="Introduction">
+      <div class="hero-bars" aria-hidden="true">
+        <div class="hero-bar" style="flex:60;background:#D447E5"></div>
+        <div class="hero-bar" style="flex:116;background:#FFAF36"></div>
+        <div class="hero-bar" style="flex:46;background:#3AD6A6"></div>
+      </div>
+      <div class="hero-body">
+        <p class="hero-eyebrow">A visual guide to Malaysia's democratic process</p>
+        <h1 class="hero-title">How Malaysia's General Election Works</h1>
+        <p class="hero-scroll-hint">Scroll to begin ↓</p>
+      </div>
+    </section>
+
+    <div class="right-panel">
+      <section class="stage-section" data-stage="dissolution">
+        <div id="dissolution-visual" class="stage-visual"></div>
+      </section>
+
+      <section class="stage-section" data-stage="nomination">
+        <div id="nomination-visual" class="stage-visual"></div>
+      </section>
+
+      <section class="stage-section stage-section--campaign" data-stage="campaign">
+        <div id="campaign-visual">
+          <div class="campaign-row" id="campaign-top"></div>
+          <div class="campaign-street">
+            <div class="street-line"></div>
+          </div>
+          <div class="campaign-row" id="campaign-bottom"></div>
+        </div>
+      </section>
+
+      <section class="stage-section" data-stage="polling">
+        <div id="polling-visual" class="stage-visual stage-visual--polling"></div>
+        <ballot-box style="width:300px;height:300px;flex-shrink:0"></ballot-box>
+      </section>
+
+      <section class="stage-section" data-stage="counting">
+        <div id="counting-visual" class="stage-visual"></div>
+      </section>
+
+      <section class="stage-section" data-stage="results">
+        <div id="results-visual" class="stage-visual"></div>
+      </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script type="module">
+      import { initDissolution } from "/src/stages/dissolution.js";
+      import { initNomination  } from "/src/stages/nomination.js";
+      import { initCampaign    } from "/src/stages/campaign.js";
+      import { initPolling     } from "/src/stages/polling.js";
+      import { initCounting    } from "/src/stages/counting.js";
+      import { initResults     } from "/src/stages/results.js";
+
+      // ── DOM refs ──────────────────────────────────────────────────────────
+      const rightPanel   = document.querySelector(".right-panel");
+      const stageNum     = document.querySelector(".stage-num");
+      const stageTitle   = document.querySelector(".stage-title");
+      const stageDesc    = document.querySelector(".stage-desc");
+      const stageText    = document.querySelector(".stage-text");
+      const sections     = Array.from(document.querySelectorAll(".stage-section"));
+      const journeySteps = Array.from(document.querySelectorAll(".journey-step"));
+
+      // ── Stage text data ───────────────────────────────────────────────────
+      const STAGE_DATA = {
+        dissolution: { num: "01", title: "DISSOLUTION", desc: "Every election starts by Parliament being dissolved, either by the Prime Minister's call or automatically at the end of its term. From there, the clock starts. A new election must follow within 60 days." },
+        nomination:  { num: "02", title: "NOMINATION",  desc: "Candidates file nomination papers within a strict window: 9:00–10:00am. Papers are displayed publicly for scrutiny from 10:00–11:00am. Only candidates who clear this hour move forward." },
+        campaign:    { num: "03", title: "CAMPAIGN",    desc: "The campaign is taken to the streets. At least 11 days must separate nomination day from polling day. Campaigning must end at midnight before polling day, the cooling-off day, where no public rallies are allowed." },
+        polling:     { num: "04", title: "POLLING",     desc: "Voters head to their designated polling stations to cast their ballot. Every eligible citizen chooses their representative across 222 parliamentary constituencies." },
+        counting:    { num: "05", title: "COUNTING",    desc: "Ballot papers are counted at each polling station in front of scrutineers. The polling station head and scrutineers sign Form 14 to finalise results." },
+        results:     { num: "06", title: "RESULTS",     desc: "The Managing Officer formally declares the candidate with the majority of votes as the elected representative. Once declared across enough seats, the new Parliament is set." },
+      };
+
+      function updateJourneyMap(id) {
+        journeySteps.forEach((s) => s.classList.remove("journey-step--active"));
+        const active = journeySteps.find((s) => s.dataset.stage === id);
+        if (active) active.classList.add("journey-step--active");
+      }
+
+      function updateStageText(id) {
+        const s = STAGE_DATA[id];
+        if (!s) return;
+        updateJourneyMap(id);
+        stageText.style.opacity = "0";
+        setTimeout(() => {
+          stageNum.textContent    = s.num;
+          stageTitle.textContent  = s.title;
+          stageDesc.textContent   = s.desc;
+          stageText.style.opacity = "1";
+        }, 250);
+      }
+
+      // journey map starts deactivated — hero covers everything at load
+
+      // ── Hero overlay ──────────────────────────────────────────────────────
+      const heroOverlay = document.querySelector(".stage-section--hero");
+      let heroVisible   = true;
+
+      function dismissHero() {
+        if (!heroVisible) return;
+        heroVisible  = false;
+        wheelLocked  = true;
+        accumulated  = 0;
+        updateStageText("dissolution");
+        currentIdx   = 0;
+        gsap.to(heroOverlay, {
+          opacity: 0, duration: 0.6, ease: "power2.inOut",
+          onComplete: () => {
+            heroOverlay.style.display = "none";
+            PLAY.dissolution?.();
+            setTimeout(() => { accumulated = 0; wheelLocked = false; }, 300);
+          },
+        });
+      }
+
+      function showHero() {
+        heroVisible = true;
+        heroOverlay.style.display = "";
+        heroOverlay.style.opacity = "1";
+        rightPanel.scrollTo({ top: 0, behavior: "instant" });
+        currentIdx  = 0;
+        accumulated = 0;
+        wheelLocked = false;
+        journeySteps.forEach((s) => s.classList.remove("journey-step--active"));
+      }
+
+      // ── Scroll navigation ─────────────────────────────────────────────────
+      let currentIdx  = 0;
+      let wheelLocked = false;
+      let accumulated = 0;
+      const THRESHOLD = 120;
+
+      function goToStage(idx) {
+        idx = Math.max(0, Math.min(sections.length - 1, idx));
+        currentIdx = idx;
+        rightPanel.scrollTo({ top: idx * rightPanel.clientHeight, behavior: "smooth" });
+        const id = sections[idx]?.dataset.stage;
+        if (id) { updateStageText(id); PLAY[id]?.(); }
+        setTimeout(() => { accumulated = 0; wheelLocked = false; }, 500);
+      }
+
+      function handleWheel(e) {
+        e.preventDefault();
+        if (heroVisible) {
+          if (e.deltaY > 0) dismissHero();
+          return;
+        }
+        if (wheelLocked) return;
+        accumulated += e.deltaY;
+        if (Math.abs(accumulated) < THRESHOLD) return;
+        const dir   = accumulated > 0 ? 1 : -1;
+        accumulated = 0;
+        wheelLocked = true;
+        goToStage(currentIdx + dir);
+      }
+
+      document.querySelector(".stage-panel").addEventListener("wheel", handleWheel, { passive: false });
+      heroOverlay.addEventListener("wheel", handleWheel, { passive: false });
+      rightPanel.addEventListener("wheel", handleWheel, { passive: false });
+
+      journeySteps.forEach((step, i) => {
+        step.addEventListener("click", () => {
+          if (heroVisible) dismissHero();
+          if (!wheelLocked) { wheelLocked = true; goToStage(i); }
+        });
+      });
+
+      rightPanel.addEventListener("scrollend", () => {
+        currentIdx  = Math.round(rightPanel.scrollTop / rightPanel.clientHeight);
+        accumulated = 0;
+        setTimeout(() => { wheelLocked = false; }, 200);
+      });
+
+      // ── IntersectionObserver ──────────────────────────────────────────────
+      const PLAY = {};
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            updateStageText(entry.target.dataset.stage);
+            PLAY[entry.target.dataset.stage]?.();
+          });
+        },
+        { root: rightPanel, threshold: 0.5 },
+      );
+      sections.forEach((s) => observer.observe(s));
+
+      // ── Fetch SVGs + init all stages ──────────────────────────────────────
+      Promise.all([
+        fetch("/src/assets/dissolve.svg").then((r) => r.text()),
+        fetch("/src/assets/nomination.svg").then((r) => r.text()),
+        fetch("/src/assets/ballot-paper.svg").then((r) => r.text()),
+        fetch("/src/assets/counting.svg").then((r) => r.text()),
+      ]).then(([dissolveSvg, nominationSvg, ballotSvg, countingSvg]) => {
+        initDissolution(dissolveSvg, PLAY);
+        initNomination(nominationSvg, PLAY);
+        initCampaign(nominationSvg, PLAY);
+        initPolling(ballotSvg, PLAY);
+        initCounting(countingSvg, PLAY);
+        initResults(dissolveSvg, PLAY, { restart: showHero });
+      });
+    </script>
+    <script type="module" src="/src/ballot-box.js"></script>
+  </body>
+</html>
