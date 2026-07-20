@@ -143,9 +143,12 @@
         if (active) active.classList.add("journey-step--active");
       }
 
+      let activeStageId = null;
+
       function updateStageText(id) {
         const s = STAGE_DATA[id];
-        if (!s) return;
+        if (!s || id === activeStageId) return;
+        activeStageId = id;
         updateJourneyMap(id);
         stageText.style.opacity = "0";
         setTimeout(() => {
