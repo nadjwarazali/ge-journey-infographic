@@ -4,7 +4,7 @@ An interactive scrollytelling page that walks through the six stages of a Malays
 
 ## Demo
 
-Deployed on Vercel: (https://ge-journey-infographic.vercel.app/)
+Deployed on Vercel: https://ge-journey-infographic.vercel.app/
 
 ## What it is
 
