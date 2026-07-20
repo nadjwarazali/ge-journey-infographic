@@ -220,9 +220,34 @@
         goToStage(currentIdx + dir);
       }
 
-      document.querySelector(".stage-panel").addEventListener("wheel", handleWheel, { passive: false });
-      heroOverlay.addEventListener("wheel", handleWheel, { passive: false });
-      rightPanel.addEventListener("wheel", handleWheel, { passive: false });
+      const scrollTargets = [document.querySelector(".stage-panel"), heroOverlay, rightPanel];
+      scrollTargets.forEach(el => el.addEventListener("wheel", handleWheel, { passive: false }));
+
+      // ── Touch navigation (mobile) ─────────────────────────────────────────
+      let touchStartY = 0;
+
+      function handleTouchStart(e) {
+        touchStartY = e.touches[0].clientY;
+      }
+
+      function handleTouchMove(e) {
+        e.preventDefault(); // block native scroll; we control paging
+      }
+
+      function handleTouchEnd(e) {
+        const dy = touchStartY - e.changedTouches[0].clientY;
+        if (Math.abs(dy) < 40) return;
+        if (heroVisible) { if (dy > 0) dismissHero(); return; }
+        if (wheelLocked) return;
+        wheelLocked = true;
+        goToStage(currentIdx + (dy > 0 ? 1 : -1));
+      }
+
+      scrollTargets.forEach(el => {
+        el.addEventListener("touchstart", handleTouchStart, { passive: true });
+        el.addEventListener("touchmove",  handleTouchMove,  { passive: false });
+        el.addEventListener("touchend",   handleTouchEnd,   { passive: true });
+      });
 
       journeySteps.forEach((step, i) => {
         step.addEventListener("click", () => {
