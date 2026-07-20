@@ -110,7 +110,19 @@ a:hover { color: #fff; }
   background: #0b1428;
 }
 
-.hero-bars { display: none; }
+.hero-bars {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  z-index: 2;
+}
+
+.hero-bar {
+  transform-origin: left;
+}
 
 .hero-body {
   position: relative;

@@ -165,6 +165,13 @@
       const heroOverlay = document.querySelector(".stage-section--hero");
       let heroVisible   = true;
 
+      // Entrance animation: bars wipe in, then text staggers up
+      gsap.timeline({ delay: 0.2 })
+        .from(".hero-bars .hero-bar", { scaleX: 0, duration: 0.7, stagger: 0.12, ease: "power3.out" })
+        .from(".hero-eyebrow",        { opacity: 0, y: 15, duration: 0.5, ease: "power2.out" }, "-=0.3")
+        .from(".hero-title",          { opacity: 0, y: 28, duration: 0.7, ease: "power2.out" }, "-=0.25")
+        .from(".hero-scroll-hint",    { opacity: 0, duration: 0.5, ease: "power2.out" }, "-=0.1");
+
       function dismissHero() {
         if (!heroVisible) return;
         heroVisible  = false;
@@ -173,7 +180,7 @@
         updateStageText("dissolution");
         currentIdx   = 0;
         gsap.to(heroOverlay, {
-          opacity: 0, duration: 0.6, ease: "power2.inOut",
+          yPercent: -100, duration: 0.85, ease: "power3.inOut",
           onComplete: () => {
             heroOverlay.style.display = "none";
             PLAY.dissolution?.();
@@ -184,8 +191,8 @@
 
       function showHero() {
         heroVisible = true;
+        gsap.set(heroOverlay, { yPercent: 0, opacity: 1 });
         heroOverlay.style.display = "";
-        heroOverlay.style.opacity = "1";
         rightPanel.scrollTo({ top: 0, behavior: "instant" });
         currentIdx  = 0;
         accumulated = 0;
